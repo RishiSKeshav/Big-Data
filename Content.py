@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import urllib
 import requests
 import json
+import pymongo
+from pymongo import MongoClient
 
 sectorDictionary = dict()
 sectorDictionary['Mobile Technolgies'] = ['mobile communication','mobile software','mobile technologies','Mobile & Communications','Mobile','mobile computing'
@@ -86,24 +88,38 @@ def get_sector(content):
         #print "Not found"
         return "other"
 
-def create_json(sector,amount,date):
-    jsonList.append({"sector":sector,"amount":amount,"date":date})
+def create_json(sector,amount,date,link):
+    jsonList.append({"sector":sector,"amount":amount,"date":date,"link":link})
 
+def write_file(jsonList):
+	file = open("content.json", "w")
+	print>>file, jsonList
+	
 def main():
-    data = get_content("http://venturebeat.com/2015/05/13/mediabong-no-not-that-kind-inhales-5m-for-u-s-expansion/")
-    amount = get_amount(data[0])
-    
-    sector=get_sector(data[1])
-    
-    date = data[2]
 
-    create_json(sector,amount,date)
-    #-jsonList.append({"sector":"aasdf","amount":"328947","date":"4378 may 2015"})
-    print jsonList
+	with open("vb1.txt") as f:
+		links = f.readlines()
+	#print links 
+	
+	for link in links:
+		data = get_content(link)
+		amount = get_amount(data[0])
     
+		sector=get_sector(data[1])
+    
+		date = data[2]
+
+		create_json(sector,amount,date,link)
+		
+		
+    #-jsonList.append({"sector":"aasdf","amount":"328947","date":"4378 may 2015"})
+    
+	write_file(jsonList)
+	print jsonList
+	#print jsonList[0]['amount']
     #print sectorDictionary.keys()
     
     
     
 main()    
-input()
+
