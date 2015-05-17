@@ -101,7 +101,7 @@ def write_file(jsonList):
 	
 def main():
 
-	with open("vb1.txt") as f:
+	with open("links.txt") as f:
 		links = f.readlines()
 	#print links 
 	

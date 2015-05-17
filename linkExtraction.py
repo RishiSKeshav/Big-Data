@@ -6,7 +6,7 @@ from nltk import pos_tag, word_tokenize
 from nltk.corpus import stopwords
 
 
-file = open("vb.txt", "w")
+file = open("links.txt", "w")
 def stems(speech,link):
 	keywords = ["rais","fund","invest","land","inhal","lead","pull","$"]
 	for i in speech:
