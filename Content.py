@@ -90,6 +90,8 @@ def get_sector(content):
 
 def create_json(sector,amount,date,link):
     jsonList.append({"sector":sector,"amount":amount,"date":date,"link":link})
+    connection = MongoClient('localhost',27017)
+    collection.insert({"sector":sector,"amount":amount,"date":date,"link":link})
 
 def write_file(jsonList):
 	file = open("content.json", "w")
