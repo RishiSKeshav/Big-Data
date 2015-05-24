@@ -137,9 +137,9 @@ def readData(year,sector):
 					#index=temp.index('M'|'B')
 					amount=temp[1:-1]
 					if 'M' in temp or 'm' in temp:
-						amt=1000*float(amount)
+						amt=float(amount)/1000
 					elif 'B' in temp or 'b' in temp:
-						amt=1000000*float(amount)
+						amt=float(amount)/1000000
 					else:
 						amt=float(amount) 
 					#print sector,amount
