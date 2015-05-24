@@ -94,7 +94,25 @@ def mean():
 			else:
 				print sector,":0"
 		print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+
+def mode():
+
+	amount=[]
 	
+	connection = MongoClient('localhost',27017)
+	db = connection.vc_database1
+	collection = db.vc_collection1
+	
+	for year in yearArray:
+		for sector in sectors:
+			for data in db.vc_collection1.find({"year":year,"sector":sector}):
+				temp=str(data['amount'])
+				if temp != "":
+					amount.append((temp))
+			if len(amount)>0:		
+				print "mode for year", year,"sector",sector,"is",statistics.mode(amount)
+			else:
+				print "mode for year", year,"sector",sector,"is 	
 def readData(year,sector):
 	
 	connection = MongoClient('localhost',27017)
@@ -151,5 +169,6 @@ def main():
 	mean()
 	median()
 	sd()
+	mode()
 	
 main()
