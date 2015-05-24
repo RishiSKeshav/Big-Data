@@ -89,11 +89,16 @@ def get_sector(content):
         return "other"
 
 def create_json(sector,amount,date,link):
-    jsonList.append({"sector":sector,"amount":amount,"date":date,"link":link})
-    connection = MongoClient('localhost',27017)
-    db = connection.vc_database 
-    collection = db.vc_collection 
-    collection.insert({"sector":sector,"amount":amount,"date":date,"link":link})
+
+	temp = date.split(',')
+	temp2=temp[1]
+	year=temp2[1:5]
+	#print year
+	jsonList.append({"sector":sector,"amount":amount,"date":date,"year":year,"link":link})
+	connection = MongoClient('localhost',27017)
+	db = connection.vc_database1 
+	collection = db.vc_collection1 
+	collection.insert({"sector":sector,"amount":amount,"date":date,"year":year,"link":link})
 
 def write_file(jsonList):
 	file = open("content.json", "w")
@@ -104,21 +109,19 @@ def main():
 	with open("links.txt") as f:
 		links = f.readlines()
 	#print links 
-	
+	total=0
 	for link in links:
 		data = get_content(link)
 		amount = get_amount(data[0])
-    
 		sector=get_sector(data[1])
-    
 		date = data[2]
-
+	
 		create_json(sector,amount,date,link)
 		
 		
     #-jsonList.append({"sector":"aasdf","amount":"328947","date":"4378 may 2015"})
     
-	write_file(jsonList)
+	#write_file(jsonList)
 	print jsonList
 	#print jsonList[0]['amount']
     #print sectorDictionary.keys()
