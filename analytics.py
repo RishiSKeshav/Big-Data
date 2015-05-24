@@ -13,6 +13,46 @@ from pymongo import MongoClient
 yearArray=["2014","2015"]
 sectors=['Mobile Technolgies','Healthcare','Finance','Energy','Software Technology','Media','Logistics','Hardware Components','Cloud platform','Networks','ecommerce','social media']
 
+def sd():
+	
+	amountArray=[]
+
+	connection = MongoClient('localhost',27017)
+	db = connection.vc_database1
+	collection = db.vc_collection1
+	
+	#for year1 in yearArray:
+		#print year1
+		#data = db.vc_collection1.find({"year":year1})
+	#for sec in sectors:
+	total=0.0
+	count=0
+	for year in yearArray:
+		print "Standard Deviation"
+		print "Year:",year
+		for sector in sectors:
+			for data in db.vc_collection1.find({"year":year,"sector":sector}):
+				temp=data['amount']
+				temp=str(temp)
+				if temp != "":
+					#print temp
+					#s.find('$')==-1
+					if 'M' in temp or 'B' in temp or 'K' in temp or 'm' in temp or 'k' in temp or 'b' in temp: 
+					#if temp.find("M")==-1 or temp.find("B")==-1:
+						#index=temp.index('M'|'B')
+						amount=temp[1:-1]
+						if 'M' in temp or 'm' in temp:
+							amt=1000*float(amount)
+							amountArray.append(amt)
+						elif 'B' in temp or 'b' in temp:
+							amt=1000000*float(amount)
+							amountArray.append(amt)
+						else:
+							amt=float(amount) 
+							amountArray.append(amt)
+			print sector," : ",statistics.stdev(amountArray)
+		print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+
 
 def median():
 	
@@ -110,5 +150,6 @@ def readData(year,sector):
 def main():
 	mean()
 	median()
+	sd()
 	
 main()
