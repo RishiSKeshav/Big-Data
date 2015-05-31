@@ -6,8 +6,6 @@ import pymongo
 from pymongo import MongoClient
 
 sectorDictionary = dict()
-sectorDictionary['Mobile Technolgies'] = ['mobile communication','mobile software','mobile technologies','Mobile & Communications','Mobile','mobile computing'
-                                    ,'mobile services','mobile and wireless','wireless technology','media and telecoms','Early stage mobile','Mobile Services & Infrastructure']
 
 sectorDictionary['Healthcare'] = ['healthcare Technology','Healthcare & Cleantech','Healthcare','Clean Tech','Technology and Healthcare','Digital Health'
                                     ,'Clean Technology','bio-tech','Life Sciences','Pharmaceuticals','Medical Technology','Biotechnology'
@@ -19,10 +17,7 @@ sectorDictionary['Finance'] = ['Business & Financial services','Business Service
 sectorDictionary['Energy'] = ['Industrials & Energy','energy','Energy Technologies','Energy and Information Technology'
                         ,'Renewable Energy','Alternative energy','Energytech','Energy-Related Products and Services']
 
-sectorDictionary['Software Technology'] = ['Information Services','IT Infrastructure','Enterprise Software','Infrastructure Software and Services'
-                        ,'Software','Gaming','Software & Business Services','Software and Services','Applications']
-
-sectorDictionary['Media'] = ['New Media','Internet','Interactive digital media','Internet and Digital Media'
+sectorDictionary['Media'] = ['New Media','Interactive digital media','Internet and Digital Media'
                         ,'Media and Entertainment','Consumer Internet','Info and Comm Technology','Digital Home and Digital Media','advertising']
 
 sectorDictionary['Logistics'] = ['maritime']
@@ -34,9 +29,17 @@ sectorDictionary['Cloud platform'] = ['Cloud Computing','Cloud/SaaS','Cloud Serv
 
 sectorDictionary['Networks'] = ['Communications','Networking','Information and Communications Technology','Consumer and Business Networking Applications to networkingy']
 
-sectorDictionary['ecommerce'] = ['Next-Gen Commerce','Internet-based Advertising','Web-Enabled Services']
+sectorDictionary['ecommerce'] = ['internet','marketplace','Next-Gen Commerce','Internet-based Advertising','Web-Enabled Services']
 
 sectorDictionary['social media'] = ['Social']
+
+sectorDictionary['Software Technology'] = ['Information Services','IT Infrastructure','Enterprise Software','Infrastructure Software and Services'
+                        ,'Software','Gaming','games','Software & Business Services','Software and Services','Applications']
+
+
+sectorDictionary['Mobile Technolgies'] = ['app','mobile communication','mobile software','mobile technologies','Mobile & Communications','Mobile and Communications','mobile computing'
+                                    ,'mobile services','mobile and wireless','wireless technology','media and telecoms','Early stage mobile','Mobile Services & Infrastructure']
+
 
 jsonList = []
 
@@ -96,8 +99,8 @@ def create_json(sector,amount,date,link):
 	#print year
 	jsonList.append({"sector":sector,"amount":amount,"date":date,"year":year,"link":link})
 	connection = MongoClient('localhost',27017)
-	db = connection.vc_database1 
-	collection = db.vc_collection1 
+	db = connection.vc_database 
+	collection = db.vc_collection2 
 	collection.insert({"sector":sector,"amount":amount,"date":date,"year":year,"link":link})
 
 def write_file(jsonList):
@@ -111,12 +114,14 @@ def main():
 	#print links 
 	total=0
 	for link in links:
+		print link
 		data = get_content(link)
 		amount = get_amount(data[0])
 		sector=get_sector(data[1])
 		date = data[2]
-	
-		create_json(sector,amount,date,link)
+		
+		if amount != "":
+			create_json(sector,amount,date,link)
 		
 		
     #-jsonList.append({"sector":"aasdf","amount":"328947","date":"4378 may 2015"})

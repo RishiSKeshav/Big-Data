@@ -53,7 +53,7 @@ def scrap(count):
 		
 
 def main():
-	scrap(0)	
+	scrap(1107)	
 	
 
 main()

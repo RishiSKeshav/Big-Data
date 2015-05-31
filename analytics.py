@@ -10,7 +10,7 @@ from pymongo import MongoClient
 
 
 #sector=dict()
-yearArray=["2014","2015"]
+yearArray=["2009","2010","2011","2012","2013","2014","2015"]
 sectors=['Mobile Technolgies','Healthcare','Finance','Energy','Software Technology','Media','Logistics','Hardware Components','Cloud platform','Networks','ecommerce','social media']
 
 def sd():
@@ -18,12 +18,12 @@ def sd():
 	amountArray=[]
 
 	connection = MongoClient('localhost',27017)
-	db = connection.vc_database1
-	collection = db.vc_collection1
+	db = connection.vc_database
+	collection = db.vc_collection2
 	
 	#for year1 in yearArray:
 		#print year1
-		#data = db.vc_collection1.find({"year":year1})
+		#data = db.vc_collection2.find({"year":year1})
 	#for sec in sectors:
 	total=0.0
 	count=0
@@ -31,7 +31,7 @@ def sd():
 		print "Standard Deviation"
 		print "Year:",year
 		for sector in sectors:
-			for data in db.vc_collection1.find({"year":year,"sector":sector}):
+			for data in db.vc_collection2.find({"year":year,"sector":sector}):
 				temp=data['amount']
 				temp=str(temp)
 				if temp != "":
@@ -40,12 +40,18 @@ def sd():
 					if 'M' in temp or 'B' in temp or 'K' in temp or 'm' in temp or 'k' in temp or 'b' in temp: 
 					#if temp.find("M")==-1 or temp.find("B")==-1:
 						#index=temp.index('M'|'B')
-						amount=temp[1:-1]
+						if '-' in temp:
+							continue
+						if ',' in temp or '+' in temp or '?' in temp or ')' in temp:
+							amount=temp[1:-2]
+						else:
+							amount=temp[1:-1]
+					#	amount=temp[1:-1]
 						if 'M' in temp or 'm' in temp:
-							amt=1000*float(amount)
+							amt=float(amount)/1000
 							amountArray.append(amt)
 						elif 'B' in temp or 'b' in temp:
-							amt=1000000*float(amount)
+							amt=float(amount)/1000000
 							amountArray.append(amt)
 						else:
 							amt=float(amount) 
@@ -59,24 +65,37 @@ def median():
 	amount=[]
 	
 	connection = MongoClient('localhost',27017)
-	db = connection.vc_database1
-	collection = db.vc_collection1
+	db = connection.vc_database
+	collection = db.vc_collection2
 	
 	for year in yearArray:
 		print "Median"
 		print "Year:",year
 		for sector in sectors:
-			for data in db.vc_collection1.find({"year":year,"sector":sector}):
+			for data in db.vc_collection2.find({"year":year,"sector":sector}):
 				temp=str(data['amount'])
 				if temp != "":
+					#print temp
 					if 'M' in temp or 'B' in temp or 'K' in temp or 'm' in temp or 'k' in temp or 'b' in temp:
-						amt=temp[1:-1]
+						if '-' in temp:
+							continue
+						if ',' in temp or '+' in temp or '?' in temp or ')' in temp or '.' in temp:
+							amt=temp[1:-2]
+						else:
+							amt=temp[1:-1]
+					#	amt=temp[1:-1]
 						amount.append(float(amt))
 					else:
-						amt=temp[1:len(temp)]	
+						if '-' in temp:
+							continue
+						if ',' in temp or '+' in temp or '?' in temp or ')' in temp or '.' in temp:
+							amt=temp[1:len(temp)-1]
+						#else:
+						#	amt=temp[1:-1]
+						#amt=temp[1:len(temp)]	
 						amount.append(float(amt))
 	
-		print "median",statistics.median(amount)
+			print sector,":",statistics.median(amount)
 		print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 		
 		
@@ -90,42 +109,26 @@ def mean():
 		for sector in sectors:
 			total=readData(year,sector)
 			if total[1]!=0:
-				print sector,":",total[0]/total[1]
+				mean =total[0]/total[1]
+				print sector,":",mean/1000,"total",total[0]/1000
 			else:
 				print sector,":0"
 		print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 
-def mode():
 
-	amount=[]
-	
-	connection = MongoClient('localhost',27017)
-	db = connection.vc_database1
-	collection = db.vc_collection1
-	
-	for year in yearArray:
-		for sector in sectors:
-			for data in db.vc_collection1.find({"year":year,"sector":sector}):
-				temp=str(data['amount'])
-				if temp != "":
-					amount.append((temp))
-			if len(amount)>0:		
-				print "mode for year", year,"sector",sector,"is",statistics.mode(amount)
-			else:
-				print "mode for year", year,"sector",sector,"is 	
 def readData(year,sector):
 	
 	connection = MongoClient('localhost',27017)
-	db = connection.vc_database1
-	collection = db.vc_collection1
+	db = connection.vc_database
+	collection = db.vc_collection2
 	
 	#for year1 in yearArray:
 		#print year1
-		#data = db.vc_collection1.find({"year":year1})
+		#data = db.vc_collection21.find({"year":year1})
 	#for sec in sectors:
 	total=0.0
 	count=0
-	for data in db.vc_collection1.find({"year":year}):
+	for data in db.vc_collection2.find({"year":year}):
 		if data['sector']==sector:
 			temp=data['amount']
 			temp=str(temp)
@@ -135,11 +138,17 @@ def readData(year,sector):
 				if 'M' in temp or 'B' in temp or 'K' in temp or 'm' in temp or 'k' in temp or 'b' in temp: 
 				#if temp.find("M")==-1 or temp.find("B")==-1:
 					#index=temp.index('M'|'B')
-					amount=temp[1:-1]
+					#print temp
+					if '-' in temp:
+						continue
+					if ',' in temp or '+' in temp or '?' in temp or ')' in temp:
+						amount=temp[1:-2]
+					else:
+						amount=temp[1:-1]
 					if 'M' in temp or 'm' in temp:
-						amt=float(amount)/1000
+						amt=float(amount)*1000
 					elif 'B' in temp or 'b' in temp:
-						amt=float(amount)/1000000
+						amt=float(amount)*1000000
 					else:
 						amt=float(amount) 
 					#print sector,amount
@@ -167,8 +176,8 @@ def readData(year,sector):
     
 def main():
 	mean()
-	median()
-	sd()
-	mode()
+	#median()
+	#sd()
+	
 	
 main()
