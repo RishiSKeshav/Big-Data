@@ -110,7 +110,191 @@ def percentage():
 		print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 	#return finalTotal
 
+def percentage2009():
 
+	#for year in yearArray:
+		
+	#	print "Percentage"
+	#	print "Year:",year
+	#	year = str(year)
+	finalTotal=0.0
+		#filename=year+".tsv"
+		#print filename
+		#file = open(filename, "w")
+		#print>>file, "Sector\tAmount"
+	for sector in sectors:
+		total=readData("2009",sector)
+		if total[1]!=0:
+			sectorTemp=sector
+				#print sector+" "+str(total[0]/1000)
+				#print "Total for the year "+str(yearTotal[i])
+			totalTemp=total[0]/1000
+			
+			print "Percentage: "+sector + ": "+ str((totalTemp/yearTotal[0])*100)
+			percentageTemp=(totalTemp/yearTotal[0])*100
+			percentage2009Array.append(percentageTemp)
+			temp = sectorTemp.replace(' ', '') +"\t"+ str(total[0]/1000)
+			#	print>>file, temp
+				#print temp
+		else:
+			print sector,":0"
+			
+	print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+	
+def percentage2010():
+
+	#for year in yearArray:
+		
+	#	print "Percentage"
+	#	print "Year:",year
+	#	year = str(year)
+	finalTotal=0.0
+		#filename=year+".tsv"
+		#print filename
+		#file = open(filename, "w")
+		#print>>file, "Sector\tAmount"
+	for sector in sectors:
+		total=readData("2010",sector)
+		if total[1]!=0:
+			sectorTemp=sector
+				#print sector+" "+str(total[0]/1000)
+				#print "Total for the year "+str(yearTotal[i])
+			totalTemp=total[0]/1000
+			
+			print "Percentage: "+sector + ": "+ str((totalTemp/yearTotal[1])*100)
+			percentageTemp=(totalTemp/yearTotal[1])*100
+			percentage2010Array.append(percentageTemp)
+			temp = sectorTemp.replace(' ', '') +"\t"+ str(total[0]/1000)
+			#	print>>file, temp
+				#print temp
+		else:
+			print sector,":0"
+			
+	print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+	
+def percentage2011():
+
+	#for year in yearArray:
+		
+	#	print "Percentage"
+	#	print "Year:",year
+	#	year = str(year)
+	finalTotal=0.0
+		#filename=year+".tsv"
+		#print filename
+		#file = open(filename, "w")
+		#print>>file, "Sector\tAmount"
+	for sector in sectors:
+		total=readData("2011",sector)
+		if total[1]!=0:
+			sectorTemp=sector
+				#print sector+" "+str(total[0]/1000)
+				#print "Total for the year "+str(yearTotal[i])
+			totalTemp=total[0]/1000
+			
+			print "Percentage: "+sector + ": "+ str((totalTemp/yearTotal[2])*100)
+			percentageTemp=(totalTemp/yearTotal[2])*100
+			percentage2011Array.append(percentageTemp)
+			temp = sectorTemp.replace(' ', '') +"\t"+ str(total[0]/1000)
+			#	print>>file, temp
+				#print temp
+		else:
+			print sector,":0"
+			
+	print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"	
+
+def percentage2012():
+
+	#for year in yearArray:
+		
+	#	print "Percentage"
+	#	print "Year:",year
+	#	year = str(year)
+	finalTotal=0.0
+		#filename=year+".tsv"
+		#print filename
+		#file = open(filename, "w")
+		#print>>file, "Sector\tAmount"
+	for sector in sectors:
+		total=readData("2012",sector)
+		if total[1]!=0:
+			sectorTemp=sector
+				#print sector+" "+str(total[0]/1000)
+				#print "Total for the year "+str(yearTotal[i])
+			totalTemp=total[0]/1000
+			
+			print "Percentage: "+sector + ": "+ str((totalTemp/yearTotal[3])*100)
+			percentageTemp=(totalTemp/yearTotal[3])*100
+			percentage2012Array.append(percentageTemp)
+			temp = sectorTemp.replace(' ', '') +"\t"+ str(total[0]/1000)
+			#	print>>file, temp
+				#print temp
+		else:
+			print sector,":0"
+			
+	print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+
+def percentage2013():
+
+	#for year in yearArray:
+		
+	#	print "Percentage"
+	#	print "Year:",year
+	#	year = str(year)
+	finalTotal=0.0
+		#filename=year+".tsv"
+		#print filename
+		#file = open(filename, "w")
+		#print>>file, "Sector\tAmount"
+	for sector in sectors:
+		total=readData("2013",sector)
+		if total[1]!=0:
+			sectorTemp=sector
+				#print sector+" "+str(total[0]/1000)
+				#print "Total for the year "+str(yearTotal[i])
+			totalTemp=total[0]/1000
+			
+			print "Percentage: "+sector + ": "+ str((totalTemp/yearTotal[4])*100)
+			percentageTemp=(totalTemp/yearTotal[4])*100
+			percentage2013Array.append(percentageTemp)
+			temp = sectorTemp.replace(' ', '') +"\t"+ str(total[0]/1000)
+			#	print>>file, temp
+				#print temp
+		else:
+			print sector,":0"
+			
+	print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+
+def percentage2014():
+
+	#for year in yearArray:
+		
+	#	print "Percentage"
+	#	print "Year:",year
+	#	year = str(year)
+	finalTotal=0.0
+		#filename=year+".tsv"
+		#print filename
+		#file = open(filename, "w")
+		#print>>file, "Sector\tAmount"
+	for sector in sectors:
+		total=readData("2014",sector)
+		if total[1]!=0:
+			sectorTemp=sector
+				#print sector+" "+str(total[0]/1000)
+				#print "Total for the year "+str(yearTotal[i])
+			totalTemp=total[0]/1000
+			
+			print "Percentage: "+sector + ": "+ str((totalTemp/yearTotal[5])*100)
+			percentageTemp=(totalTemp/yearTotal[5])*100
+			percentage2014Array.append(percentageTemp)
+			temp = sectorTemp.replace(' ', '') +"\t"+ str(total[0]/1000)
+			#	print>>file, temp
+				#print temp
+		else:
+			print sector,":0"
+			
+	print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 		
 def fetchSectorwise():
 	for sector in sectors:
@@ -135,10 +319,46 @@ def fetchSectorwise():
 			
 		print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
 
+def getTotalInvestment2015():
+	temp=(yearTotal[5]/yearTotal[0])
+	
+	CAGR_investment= pow(temp,0.1666) -1
+	CAGR_percentage = CAGR_investment*100
+	print CAGR_percentage
+	expectedInvestment = ((yearTotal[5]*CAGR_percentage)/100)+yearTotal[5]
+	
+	return expectedInvestment 
 
+def getInvestmentSectors2015(totalInvestment):
+	
+	file = open("2015.tsv", "w")
+	print>>file, "Sector\tAmount"
+	
+	for i in range(10):
+		total = percentage2009Array[i]+percentage2010Array[i]+percentage2011Array[i]+percentage2012Array[i]+percentage2013Array[i]+percentage2014Array[i]
+		mean = total/6
+		
+		expectedInvestment=(mean*totalInvestment)/100
+		sectorTemp=sectors[i]
+		temp = sectorTemp.replace(' ', '') +"\t"+ str(expectedInvestment)
+		print>>file, temp
+	#for i in range(10):
+	#	temp=(percentage2014Array[i]/percentage2009Array[i])
+	#
+	#	CAGR_investment= pow(temp,0.166) -1
+	#	CAGR_percentage = CAGR_investment*100
+		
+	#	print CAGR_percentage
+	#	expectedPercentage = ((percentage2014Array[i]*CAGR_percentage)/100)+percentage2014Array[i]
+	#	expectedInvestment=(expectedPercentage*totalInvestment)/100
+	#	percentage2015Array.append(expectedInvestment)
+		
+	#	sectorTemp=sectors[i]
+	#	temp = sectorTemp.replace(' ', '') +"\t"+ str(expectedInvestment)
+	#	print>>file, temp
 		
 def main():
-	fetchYearwise()
+	
 	fetchSectorwise()
 	percentage2009()
 	percentage2010()
