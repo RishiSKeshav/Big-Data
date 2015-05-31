@@ -78,7 +78,92 @@ def readDataSectorWise(year,sector):
 					
 	return total,count
 
+def readData(year,sector):
+	
+	connection = MongoClient('localhost',27017)
+	db = connection.vc_database
+	collection = db.vc_collection2
+	finalTotal=0.0
+	#for year1 in yearArray:
+		#print year1
+		#data = db.vc_collection21.find({"year":year1})
+	#for sec in sectors:
+	total=0.0
+	count=0
+	for data in db.vc_collection2.find({"year":year}):
+		if data['sector']==sector:
+			temp=data['amount']
+			temp=str(temp)
+			if temp != "":
+				#print temp
+				#s.find('$')==-1
+				if 'M' in temp or 'B' in temp or 'K' in temp or 'm' in temp or 'k' in temp or 'b' in temp: 
+				#if temp.find("M")==-1 or temp.find("B")==-1:
+					#index=temp.index('M'|'B')
+					#print temp
+					if '-' in temp:
+						continue
+					if ',' in temp or '+' in temp or '?' in temp or ')' in temp:
+						amount=temp[1:-2]
+					else:
+						amount=temp[1:-1]
+					if 'M' in temp or 'm' in temp:
+						amt=float(amount)*1000
+					elif 'B' in temp or 'b' in temp:
+						amt=float(amount)*1000000
+					else:
+						amt=float(amount) 
+					#print sector,amount
+					count+=1
+					total=total+amt
+					#sum = sum + amount
+				
+		#		else:
+		#			amount=temp[1:len(temp)]
+		#			#print sector,amount
+		#			#print amount
+		#			amt=1000*float(amount)
+		#			#print data['link']
+		#		#	print type(amount)
+		#			amount = str(amount)	
+		#			#print amount
+		#			count+=1
+		#			#	print type(amount)						
+		#			total = total+amt
+			
+		#print "sum:", total*0.001,"Millions"
+		#print count
+	return total,count
 
+def fetchYearwise():
+	i=0
+	for year in yearArray:
+		
+		print "Mean"
+		print "Year:",year
+		year = str(year)
+		finalTotal=0.0
+		filename=year+".tsv"
+		print filename
+		file = open(filename, "w")
+		print>>file, "Sector\tAmount"
+		for sector in sectors:
+			
+			total=readData(year,sector)
+			if total[1]!=0:
+				sectorTemp=sector
+				temp = sectorTemp.replace(' ', '') +"\t"+ str(total[0]/1000)
+				print>>file, temp
+				print temp
+			else:
+				print sector,":0"
+			finalTotal=finalTotal+(total[0]/1000)
+		yearTotal.append(finalTotal)
+		i+=1	
+		print finalTotal
+		
+		print "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+	#return finalTotal
 	
 def percentage():
 	i=0
@@ -358,7 +443,7 @@ def getInvestmentSectors2015(totalInvestment):
 	#	print>>file, temp
 		
 def main():
-	
+	fetchYearwise()
 	fetchSectorwise()
 	percentage2009()
 	percentage2010()
